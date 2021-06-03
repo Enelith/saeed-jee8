@@ -7,3 +7,9 @@ Udemy : https://www.udemy.com/course/java-enterprise-edition-8/
 - JAX-RS reference implementation - Jersey
 - Java EE itself is a JSR
 - Java EE 8 is : JSR 366 - RI Glassfish 5
+
+# What is Jakarta EE ? 
+- It's basically Java EE going forward (since 2018)
+- Hosted by Eclipse Foundation
+- https://jakarta.ee
+- https://en.wikipedia.org/wiki/Jakarta_EE
