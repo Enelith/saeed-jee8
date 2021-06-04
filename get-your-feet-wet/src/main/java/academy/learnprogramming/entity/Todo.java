@@ -6,60 +6,76 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
 
 @Entity
 public class Todo {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
+
     private String task;
     private LocalDate dueDate;
     private boolean isCompleted;
     private LocalDate completedDate;
     private LocalDate createDate;
+
+    // This method will be called just before being inserted into DB
+    @PrePersist
+    private void init() {
+	setCreateDate(LocalDate.now());
+    }
     
     
     
     
-    
-    
-    
+
     public Long getId() {
-        return id;
+	return id;
     }
+
     public void setId(Long id) {
-        this.id = id;
+	this.id = id;
     }
+
     public String getTask() {
-        return task;
+	return task;
     }
+
     public void setTask(String task) {
-        this.task = task;
+	this.task = task;
     }
+
     public LocalDate getDueDate() {
-        return dueDate;
+	return dueDate;
     }
+
     public void setDueDate(LocalDate dueDate) {
-        this.dueDate = dueDate;
+	this.dueDate = dueDate;
     }
+
     public boolean isCompleted() {
-        return isCompleted;
+	return isCompleted;
     }
+
     public void setCompleted(boolean isCompleted) {
-        this.isCompleted = isCompleted;
+	this.isCompleted = isCompleted;
     }
+
     public LocalDate getCompletedDate() {
-        return completedDate;
+	return completedDate;
     }
+
     public void setCompletedDate(LocalDate completedDate) {
-        this.completedDate = completedDate;
+	this.completedDate = completedDate;
     }
+
     public LocalDate getCreateDate() {
-        return createDate;
+	return createDate;
     }
+
     public void setCreateDate(LocalDate createDate) {
-        this.createDate = createDate;
+	this.createDate = createDate;
     }
 }
