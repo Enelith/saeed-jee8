@@ -21,6 +21,7 @@ public class Todo {
     private LocalDate completedDate;
     private LocalDate createDate;
 
+    // Example of Entity Lifecycle Callback : 
     // This method will be called just before being inserted into DB
     @PrePersist
     private void init() {
