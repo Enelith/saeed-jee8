@@ -2,7 +2,18 @@ package academy.learnprogramming.entity;
 
 import java.time.LocalDate;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Todo {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    
     private String task;
     private LocalDate dueDate;
     private boolean isCompleted;
@@ -15,6 +26,12 @@ public class Todo {
     
     
     
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
     public String getTask() {
         return task;
     }
