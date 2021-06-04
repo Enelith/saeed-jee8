@@ -59,6 +59,3 @@ mvn*
 ### MetaData ###
 .metadata
 .metadata/**
-
-### Pdf ###
-*.pdf
