@@ -13,3 +13,9 @@ Udemy : https://www.udemy.com/course/java-enterprise-edition-8/
 - Hosted by Eclipse Foundation
 - https://jakarta.ee
 - https://en.wikipedia.org/wiki/Jakarta_EE
+
+# Basic Deploy
+ex : java -jar .\payara-micro-5.2021.4.jar --deploy E:\WORK\WORKSPACE\saeed-jee8\hello-javaee8\target\hello-javaee8.war --port 8080
+
+# UberJar
+ex : java -jar .\payara-micro-5.2021.4.jar --deploy E:\WORK\WORKSPACE\saeed-jee8\hello-javaee8\target\hello-javaee8.war --port 8080 --outputUberJar HelloJavaEE8.jar
