@@ -28,10 +28,6 @@ public class Todo {
 	setCreateDate(LocalDate.now());
     }
     
-    
-    
-    
-
     public Long getId() {
 	return id;
     }
