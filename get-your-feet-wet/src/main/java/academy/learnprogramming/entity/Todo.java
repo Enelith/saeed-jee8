@@ -2,11 +2,16 @@ package academy.learnprogramming.entity;
 
 import java.time.LocalDate;
 
+import javax.json.bind.annotation.JsonbDateFormat;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.PrePersist;
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Todo {
@@ -15,19 +20,26 @@ public class Todo {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotEmpty(message = "Task must be set")
+    @Size(min = 10, message = "Task must be at least 10 characters long")
     private String task;
+
+    @NotNull(message = "Due date must be set")
+    @FutureOrPresent(message = "Due date must be in present or future")
+    @JsonbDateFormat(value = "yyyy-MM-dd")
     private LocalDate dueDate;
+
     private boolean isCompleted;
     private LocalDate completedDate;
     private LocalDate createDate;
 
-    // Example of Entity Lifecycle Callback : 
+    // Example of Entity Lifecycle Callback :
     // This method will be called just before being inserted into DB
     @PrePersist
     private void init() {
 	setCreateDate(LocalDate.now());
     }
-    
+
     public Long getId() {
 	return id;
     }
