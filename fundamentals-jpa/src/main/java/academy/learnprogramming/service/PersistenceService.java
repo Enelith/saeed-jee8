@@ -1,13 +1,13 @@
 package academy.learnprogramming.service;
 
-import academy.learnprogramming.entities.Employee;
-import academy.learnprogramming.entities.Department;
-import academy.learnprogramming.entities.ParkingSpace;
-
 import javax.annotation.sql.DataSourceDefinition;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+
+import academy.learnprogramming.entities.Department;
+import academy.learnprogramming.entities.Employee;
+import academy.learnprogramming.entities.ParkingSpace;
 
 @DataSourceDefinition(
 	    name = "java:app/Payroll/MyDS",
