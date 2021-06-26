@@ -1,10 +1,8 @@
 $(function () {
-
     var websocket;
 
-
     function setupWebSocket() {
-        var uri = "ws://" + document.location.host + '/payroll/' + "connect/" + $("#userName").val();
+        var uri = "ws://" + document.location.host + '/websockets/' + "connect/" + $("#userName").val();
         websocket = new WebSocket(uri);
 
         websocket.onmessage = function (evt) {

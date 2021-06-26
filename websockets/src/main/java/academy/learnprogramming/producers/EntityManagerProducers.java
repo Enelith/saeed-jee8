@@ -1,10 +1,10 @@
-package academy.learnprogramming.config;
+package academy.learnprogramming.producers;
 
 import javax.enterprise.inject.Produces;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-public class Producers {
+public class EntityManagerProducers {
 
     @Produces
     @PersistenceContext

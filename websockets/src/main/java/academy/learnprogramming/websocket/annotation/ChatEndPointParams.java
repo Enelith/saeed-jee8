@@ -16,7 +16,9 @@ import javax.websocket.server.ServerEndpoint;
 
 @ServerEndpoint(value = "/connect/{user}")
 public class ChatEndPointParams {
+
     private static final ConcurrentLinkedQueue<Session> peers = new ConcurrentLinkedQueue<>();
+
     @Inject
     private Logger logger;
 
@@ -41,5 +43,4 @@ public class ChatEndPointParams {
 	    }
 	}
     }
-
 }

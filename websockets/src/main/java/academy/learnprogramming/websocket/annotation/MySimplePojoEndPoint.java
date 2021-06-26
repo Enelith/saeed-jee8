@@ -36,7 +36,5 @@ public class MySimplePojoEndPoint {
 	logger.log(Level.INFO, "My simple pojo received on the server *************");
 	logger.log(Level.INFO, mySimplePojo.toString());
 	session.getBasicRemote().sendObject(mySimplePojo);
-
     }
-
 }

@@ -1,2 +1,2 @@
 FROM airhacks/payara5
-COPY ./target/payroll.war ${DEPLOYMENT_DIR}
+COPY ./target/websockets.war ${DEPLOYMENT_DIR}

@@ -90,7 +90,7 @@ public class JaxRsClient {
     public void postEmployeeToSSE(Employee employee) {
 	String json = JsonbBuilder.create().toJson(employee);
 
-	int status = client.target("http://localhost:8080/payroll/api/v1/sse-path")
+	int status = client.target("http://localhost:8080/websockets/api/v1/sse-path")
 		    .request(MediaType.TEXT_PLAIN)
 
 		    .post(Entity.text(json))

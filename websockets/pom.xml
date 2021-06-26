@@ -40,6 +40,12 @@
 			<version>0.0.2</version>
 			<scope>compile</scope>
 		</dependency>
+		
+		<!-- 
+		https://stackoverflow.com/questions/24853118/deploying-maven-based-jsf-project-to-tomcat-results-in-java-lang-classnotfoundex
+		
+		For tomcat you have to have both jsf-api and jsf-impl since tomcat don't have bundled JSF. Please add the following dependency 
+		--> 
 		<dependency>
 			<groupId>com.sun.faces</groupId>
 			<artifactId>jsf-api</artifactId>

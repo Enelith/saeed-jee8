@@ -9,7 +9,7 @@ import javax.ws.rs.core.Application;
  *
  * @author airhacks.com
  */
-@ApplicationPath("api/v1") // https://foo.com/resources/payroll
+@ApplicationPath("api/v1") // https://foo.com/resources/websockets
 public class JAXRSConfiguration extends Application {
     // @Override
     // public Set<Class<?>> getClasses() {
