@@ -2,6 +2,7 @@ package academy.learnprogramming.security;
 
 import java.io.IOException;
 import java.security.Key;
+import java.security.Principal;
 
 import javax.annotation.Priority;
 import javax.inject.Inject;
@@ -11,6 +12,7 @@ import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.ext.Provider;
 
 import academy.learnprogramming.annotations.Authz;
@@ -51,6 +53,36 @@ public class SecurityFilter implements ContainerRequestFilter {
 	    Jws<Claims> claimsJws = Jwts.parser()
 			.setSigningKey(key)
 			.parseClaimsJws(token);
+	    SecurityContext originalContext = requestContext.getSecurityContext();
+
+	    requestContext.setSecurityContext(new SecurityContext() {
+		@Override
+		public boolean isUserInRole(String role) {
+		    return originalContext.isUserInRole(role);
+		}
+
+		@Override
+		public boolean isSecure() {
+		    return originalContext.isSecure();
+		}
+
+		@Override
+		// We needed to override this method
+		public Principal getUserPrincipal() {
+		    return new Principal() {
+			@Override
+			public String getName() {
+			    return claimsJws.getBody().getSubject(); // "Name" of the currently executing user
+			}
+		    };
+		}
+
+		@Override
+		public String getAuthenticationScheme() {
+		    return originalContext.getAuthenticationScheme();
+		}
+	    });
+
 	} catch (Exception e) {
 	    throw new NotAuthorizedException(Response.status(Response.Status.UNAUTHORIZED).build());
 	}
