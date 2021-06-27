@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import javax.json.bind.annotation.JsonbDateFormat;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.PrePersist;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotEmpty;
@@ -20,11 +21,20 @@ import javax.validation.constraints.Size;
  * @author Jonathan Vinh
  */
 @Entity
+@NamedQuery(
+	    name = Todo.FIND_BY_TASK,
+	    query = "SELECT t FROM Todo t WHERE t.task LIKE :task AND t.todoOwner.email = :email")
+@NamedQuery(name = Todo.FIND_ALL_BY_USERS, query = "SELECT t FROM Todo t WHERE t.todoOwner.email = :email")
+@NamedQuery(name = Todo.FIND_BY_ID, query = "SELECT t FROM Todo t WHERE t.id = :id AND t.todoOwner.email = :email")
 public class Todo extends AbstractEntity {
     /**
      * 
      */
     private static final long serialVersionUID = 1L;
+
+    public static final String FIND_BY_TASK = "Todo.findByTask";
+    public static final String FIND_ALL_BY_USERS = "Todo.findAllByUsers";
+    public static final String FIND_BY_ID = "Todo.findById";
 
     @NotEmpty(message = "Task must be set")
     @Size(min = 10, message = "Task should not be less than 10 characters")
@@ -87,4 +97,11 @@ public class Todo extends AbstractEntity {
 	this.dateCreated = dateCreated;
     }
 
+    public User getTodoOwner() {
+	return todoOwner;
+    }
+
+    public void setTodoOwner(User todoOwner) {
+	this.todoOwner = todoOwner;
+    }
 }
