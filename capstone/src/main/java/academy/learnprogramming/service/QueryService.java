@@ -51,8 +51,15 @@ public class QueryService {
     }
 
     public List<Todo> getAllTodos(String email) {
-        return entityManager.createNamedQuery(Todo.FIND_ALL_BY_USERS, Todo.class)
-                .setParameter("email", email)
-                .getResultList();
+	return entityManager.createNamedQuery(Todo.FIND_ALL_BY_USERS, Todo.class)
+		    .setParameter("email", email)
+		    .getResultList();
+    }
+
+    public List<Todo> getTodoByTask(String taskText, String email) {
+	return entityManager.createNamedQuery(Todo.FIND_BY_TASK, Todo.class)
+		    .setParameter("task", "%" + taskText + "%")
+		    .setParameter("email", email)
+		    .getResultList();
     }
 }
