@@ -7,25 +7,44 @@ package academy.learnprogramming.service;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 
 import academy.learnprogramming.entity.Todo;
+import academy.learnprogramming.entity.User;
 
 /**
  * @author Jonathan Vinh
  */
-@Transactional
+@Stateless
 public class TodoService {
-    @PersistenceContext
+
+    @Inject
     EntityManager entityManager;
+
+    @Inject
+    private QueryService queryService;
+
+    private String email;
+
+    @PostConstruct
+    private void init() {
+	// TODO
+	email = "";
+    }
 
     public Todo createTodo(Todo todo) {
 	// Persist into db
-	entityManager.persist(todo);
-	return todo;
+	// entityManager.persist(todo);
+	User userByEmail = queryService.findUserByEmail(email);
+	if (userByEmail != null) {
+	    todo.setTodoOwner(userByEmail);
+	    entityManager.persist(todo);
+	}
 
+	return todo;
     }
 
     public Todo updateTodo(Todo todo) {
@@ -38,6 +57,6 @@ public class TodoService {
     }
 
     public List<Todo> getTodos() {
-	return entityManager.createQuery("SELECT t from Todo t", Todo.class).getResultList();
+	return entityManager.createQuery("SELECT t FROM Todo t", Todo.class).getResultList();
     }
 }
