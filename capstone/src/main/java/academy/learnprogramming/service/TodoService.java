@@ -34,6 +34,11 @@ public class TodoService {
 	// TODO
 	email = "";
     }
+    
+    public User saveUser(User user) {
+	entityManager.persist(user);
+	return user;
+    }
 
     public Todo createTodo(Todo todo) {
 	// Persist into db
