@@ -8,6 +8,8 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.SecurityContext;
 
 import academy.learnprogramming.entity.Todo;
 import academy.learnprogramming.entity.User;
@@ -20,6 +22,10 @@ public class QueryService {
 
     @Inject
     EntityManager entityManager;
+    
+    @Context
+    private SecurityContext securityContext; // This will take the instance generated AFTER the user successfully logged in
+    // This securityContext will have a VALID Principal object
     
     public User findUserById(Long id) {
 	return entityManager.find(User.class, id);
@@ -43,27 +49,51 @@ public class QueryService {
 		    .setParameter(1, email)
 		    .getResultList();
     }
+    
+    /*
+     * For the following 3 methods, we want to restrict the access to those, since it shouldn't be accessible without security controls
+     */
 
-    public Todo findTodoById(Long id, String email) {
+    /**
+     * Find a Todo object with its ID, restricted by user currently in use
+     * 
+     * @param id
+     * @param email
+     * @return 
+     */
+    public Todo findTodoById(Long id) {
 	List<Todo> todoList = entityManager.createNamedQuery(Todo.FIND_BY_ID, Todo.class)
 		    .setParameter("id", id)
-		    .setParameter("email", email)
+		    .setParameter("email", securityContext.getUserPrincipal().getName())
 		    .getResultList();
 	return (!todoList.isEmpty()
 		    ? todoList.get(0)
 		    : null);
     }
 
-    public List<Todo> getAllTodos(String email) {
+    /**
+     * Return the list of Todo objects
+     * 
+     * @param email
+     * @return
+     */
+    public List<Todo> getAllTodos() {
 	return entityManager.createNamedQuery(Todo.FIND_ALL_BY_USERS, Todo.class)
-		    .setParameter("email", email)
+		    .setParameter("email", securityContext.getUserPrincipal().getName())
 		    .getResultList();
     }
 
-    public List<Todo> getTodoByTask(String taskText, String email) {
+    /**
+     * Return a Todo object by its task, restricted by user currently in use
+     * 
+     * @param taskText
+     * @param email
+     * @return
+     */
+    public List<Todo> getTodoByTask(String taskText) {
 	return entityManager.createNamedQuery(Todo.FIND_BY_TASK, Todo.class)
 		    .setParameter("task", "%" + taskText + "%")
-		    .setParameter("email", email)
+		    .setParameter("email", securityContext.getUserPrincipal().getName())
 		    .getResultList();
     }
 }

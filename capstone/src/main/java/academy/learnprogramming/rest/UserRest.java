@@ -1,4 +1,4 @@
-package academy.learnprogramming.rest.endpoints;
+package academy.learnprogramming.rest;
 
 import java.security.Key;
 import java.time.LocalDateTime;

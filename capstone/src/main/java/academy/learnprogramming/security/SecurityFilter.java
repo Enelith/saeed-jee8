@@ -72,7 +72,9 @@ public class SecurityFilter implements ContainerRequestFilter {
 		    return new Principal() {
 			@Override
 			public String getName() {
-			    return claimsJws.getBody().getSubject(); // "Name" of the currently executing user
+			    return claimsJws.getBody().getSubject(); // "Name" of the currently executing user (ie =
+								     // EMAIL from logging ~ cf generateToken method
+								     // from UserRest class)
 			}
 		    };
 		}

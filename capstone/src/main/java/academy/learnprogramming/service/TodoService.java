@@ -5,7 +5,6 @@
  */
 package academy.learnprogramming.service;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
@@ -53,7 +52,7 @@ public class TodoService {
 	    entityManager.persist(user);
 	    credentialMap.clear();
 	}
-	
+
 	return user;
     }
 
@@ -72,13 +71,5 @@ public class TodoService {
     public Todo updateTodo(Todo todo) {
 	entityManager.merge(todo);
 	return todo;
-    }
-
-    public Todo findToDoById(Long id) {
-	return entityManager.find(Todo.class, id);
-    }
-
-    public List<Todo> getTodos() {
-	return entityManager.createQuery("SELECT t FROM Todo t", Todo.class).getResultList();
     }
 }
