@@ -28,7 +28,7 @@ public class TodoService {
 
     @Inject
     private QueryService queryService;
-    
+
     @Inject
     private SecurityUtil securityUtil;
 
@@ -39,15 +39,20 @@ public class TodoService {
 	// TODO
 	email = "";
     }
-    
+
     public User saveUser(User user) {
-	Map<String, String> credentialMap = securityUtil.hashPassword(user.getPassword());
-	
-	user.setPassword(credentialMap.get(SecurityUtil.HASHED_PASSWORD_KEY));
-	user.setSalt(credentialMap.get(SecurityUtil.SALT_KEY));
-	
-	entityManager.persist(user);
-	credentialMap.clear();
+	Long count = (Long) queryService.countUserByEmail(user.getEmail()).get(0);
+
+	if (user.getId() == null
+		    && count == 0) {
+	    Map<String, String> credentialMap = securityUtil.hashPassword(user.getPassword());
+
+	    user.setPassword(credentialMap.get(SecurityUtil.HASHED_PASSWORD_KEY));
+	    user.setSalt(credentialMap.get(SecurityUtil.SALT_KEY));
+
+	    entityManager.persist(user);
+	    credentialMap.clear();
+	}
 	
 	return user;
     }
