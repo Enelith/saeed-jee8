@@ -20,16 +20,20 @@ public class QueryService {
 
     @Inject
     EntityManager entityManager;
-
+    
     public User findUserById(Long id) {
 	return entityManager.find(User.class, id);
     }
 
     public User findUserByEmail(String email) {
-	return entityManager.createNamedQuery(User.FIND_BY_EMAIL, User.class)
+	List<User> users= entityManager.createNamedQuery(User.FIND_BY_EMAIL, User.class)
 		    .setParameter("email", email)
-		    .getResultList()
-		    .get(0);
+		    .getResultList();
+	
+	if(!users.isEmpty()) {
+	    return users.get(0);
+	}
+	return null;
     }
 
     @SuppressWarnings("rawtypes")
