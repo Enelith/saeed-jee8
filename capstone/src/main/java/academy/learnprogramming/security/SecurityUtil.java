@@ -28,7 +28,7 @@ import io.jsonwebtoken.impl.crypto.MacProvider;
 /**
  * @author Jonathan Vinh
  */
-@ApplicationScoped
+@ApplicationScoped // This class will exists for all the duration of this application (thus the same one used by all shared user sessions)
 public class SecurityUtil {
     public static final String BEARER = "Bearer";
     public static final String HASHED_PASSWORD_KEY = "hashedPassword";
@@ -41,6 +41,7 @@ public class SecurityUtil {
 
     @PostConstruct
     private void init() {
+	// Only executed once, bcs of @ApplicationScoped
 	securityKey = generateKey();
     }
 
