@@ -1,3 +1,8 @@
+# Run the Application : 
+mvn clean package payara-micro:start
+
+
+
 # Build
 mvn clean package && docker build -t academy.learnprogramming/hello-todo .
 
