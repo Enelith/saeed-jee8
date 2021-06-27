@@ -49,4 +49,10 @@ public class QueryService {
 		    ? todoList.get(0)
 		    : null);
     }
+
+    public List<Todo> getAllTodos(String email) {
+        return entityManager.createNamedQuery(Todo.FIND_ALL_BY_USERS, Todo.class)
+                .setParameter("email", email)
+                .getResultList();
+    }
 }
