@@ -9,6 +9,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
+import academy.learnprogramming.entity.Todo;
 import academy.learnprogramming.entity.User;
 
 /**
@@ -37,5 +38,15 @@ public class QueryService {
 		    "SELECT COUNT(id) FROM TodoUser WHERE EXISTS(SELECT id FROM TodoUser WHERE email = ?)")
 		    .setParameter(1, email)
 		    .getResultList();
+    }
+
+    public Todo findTodoById(Long id, String email) {
+	List<Todo> todoList = entityManager.createNamedQuery(Todo.FIND_BY_ID, Todo.class)
+		    .setParameter("id", id)
+		    .setParameter("email", email)
+		    .getResultList();
+	return (!todoList.isEmpty()
+		    ? todoList.get(0)
+		    : null);
     }
 }
