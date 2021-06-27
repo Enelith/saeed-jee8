@@ -10,13 +10,16 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import academy.learnprogramming.entity.User;
 import academy.learnprogramming.security.SecurityUtil;
+import academy.learnprogramming.service.TodoService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -28,6 +31,9 @@ public class UserRest {
 
     @Inject
     private SecurityUtil securityUtil;
+
+    @Inject
+    private TodoService todoService; // <=> Persistence Service
 
     @Context
     private UriInfo uriInfo;
@@ -65,5 +71,15 @@ public class UserRest {
 		    .setExpiration(securityUtil.toDate(LocalDateTime.now().plusMinutes(15)))
 		    .signWith(SignatureAlgorithm.HS512, securityKey)
 		    .compact();
+    }
+
+    @Path("create")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response saveUser(@NotNull User user) {
+	todoService.saveUser(user);
+
+	return Response.ok(user).build();
     }
 }
