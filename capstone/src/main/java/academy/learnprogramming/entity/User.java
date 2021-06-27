@@ -49,7 +49,11 @@ public class User extends AbstractEntity {
     // @Pattern(regexp = "", message = "Password must be a combination of alphabets,
     // numbers and special characters")
     private String password;
+    
+    private String salt;
 
+    
+    
     public String getFullName() {
 	return fullName;
     }
@@ -72,5 +76,13 @@ public class User extends AbstractEntity {
 
     public void setPassword(String password) {
 	this.password = password;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 }
