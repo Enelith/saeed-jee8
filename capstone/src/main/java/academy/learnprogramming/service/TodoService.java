@@ -6,6 +6,7 @@
 package academy.learnprogramming.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
@@ -14,6 +15,7 @@ import javax.persistence.EntityManager;
 
 import academy.learnprogramming.entity.Todo;
 import academy.learnprogramming.entity.User;
+import academy.learnprogramming.security.SecurityUtil;
 
 /**
  * @author Jonathan Vinh
@@ -26,6 +28,9 @@ public class TodoService {
 
     @Inject
     private QueryService queryService;
+    
+    @Inject
+    private SecurityUtil securityUtil;
 
     private String email;
 
@@ -36,7 +41,14 @@ public class TodoService {
     }
     
     public User saveUser(User user) {
+	Map<String, String> credentialMap = securityUtil.hashPassword(user.getPassword());
+	
+	user.setPassword(credentialMap.get(SecurityUtil.HASHED_PASSWORD_KEY));
+	user.setSalt(credentialMap.get(SecurityUtil.SALT_KEY));
+	
 	entityManager.persist(user);
+	credentialMap.clear();
+	
 	return user;
     }
 

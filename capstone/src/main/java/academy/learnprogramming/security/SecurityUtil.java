@@ -31,11 +31,12 @@ import io.jsonwebtoken.impl.crypto.MacProvider;
 @ApplicationScoped
 public class SecurityUtil {
     public static final String BEARER = "Bearer";
+    public static final String HASHED_PASSWORD_KEY = "hashedPassword";
+    public static final String SALT_KEY = "salt";
 
     @Inject
     private QueryService queryService;
-    public static final String HASHED_PASSWORD_KEY = "hashedPassword";
-    public static final String SALT_KEY = "salt";
+    
     private SecretKey securityKey;
 
     @PostConstruct
